@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const initRouter = require('./router');
+const resultMiddleware = require('./middleware/result');
 
 const app = express();
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(resultMiddleware);
 
 // 路由
 initRouter(app);
