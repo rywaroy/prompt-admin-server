@@ -48,11 +48,13 @@ exports.chat = async (req, res) => {
         //     frequency_penalty: 0,
         //     messages,
         // });
+        console.log('chat');
         const completion = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: 'Hello world',
         });
-        res.success(completion);
+        console.log(completion.data.choices[0].text);
+        res.success(completion.data.choices[0].text);
         // const data = await fetch('https://api.openai.com/v1/chat/completions');
         // res.success(data);
     } catch (error) {
