@@ -15,7 +15,7 @@ exports.chat = async (req, res) => {
         //     'Cache-Control': 'no-cache',
         //     Connection: 'keep-alive',
         // });
-        // const { model = 'gpt-3.5-turbo', messages } = req.body;
+        const { model = 'gpt-3.5-turbo', messages } = req.body;
         // await fetchSSE('https://api.openai.com/v1/chat/completions', {
         //     onMessage: (data) => {
         //         res.write(`data: ${data}\n\n`);
@@ -39,22 +39,22 @@ exports.chat = async (req, res) => {
         //         stream: true,
         //     }),
         // });
-        // const completion = await openai.createCompletion({
-        //     model,
-        //     temperature: 0,
-        //     max_tokens: 1536,
-        //     top_p: 1,
-        //     presence_penalty: 0,
-        //     frequency_penalty: 0,
-        //     messages,
-        // });
-        console.log('chat');
-        const completion = await openai.createCompletion({
-            model: 'text-davinci-003',
-            prompt: 'Hello world',
+        const completion = await openai.createChatCompletion({
+            model,
+            temperature: 0,
+            max_tokens: 1536,
+            top_p: 1,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            messages,
         });
-        console.log(completion.data.choices[0].text);
-        res.success(completion.data.choices[0].text);
+        // console.log('chat');
+        // const completion = await openai.createChatCompletion({
+        //     model: 'text-davinci-003',
+        //     prompt: 'Hello world',
+        // });
+        console.log(completion);
+        res.success({});
         // const data = await fetch('https://api.openai.com/v1/chat/completions');
         // res.success(data);
     } catch (error) {
