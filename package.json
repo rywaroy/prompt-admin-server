@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.3.2",
     "node-fetch": "^3.3.1",
+    "openai": "^3.2.1",
     "sequelize": "^6.31.1",
     "uuid": "^9.0.0"
   },
