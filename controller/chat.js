@@ -28,12 +28,9 @@ exports.chat = async (req, res) => {
         );
         completion.data.on('data', (data) => {
             const text = data.toString();
+            res.write(text);
             if (text.indexOf('[DONE]') !== -1) {
-                console.log('end');
                 res.end();
-            } else {
-                console.log(text);
-                res.write(text);
             }
         });
     } catch (error) {
