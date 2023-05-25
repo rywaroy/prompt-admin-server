@@ -47,6 +47,7 @@ exports.chat = async (req, res) => {
             presence_penalty: 0,
             frequency_penalty: 0,
             messages,
+            stream: true,
         });
         // console.log('chat');
         // const completion = await openai.createChatCompletion({
