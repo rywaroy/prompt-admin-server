@@ -39,16 +39,19 @@ exports.chat = async (req, res) => {
         //         stream: true,
         //     }),
         // });
-        const completion = await openai.createChatCompletion({
-            model,
-            temperature: 0,
-            max_tokens: 1536,
-            top_p: 1,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            messages,
-            stream: true,
-        });
+        const completion = await openai.createChatCompletion(
+            {
+                model,
+                temperature: 0,
+                max_tokens: 1536,
+                top_p: 1,
+                presence_penalty: 0,
+                frequency_penalty: 0,
+                messages,
+                stream: true,
+            },
+            { responseType: 'stream' },
+        );
         // console.log('chat');
         // const completion = await openai.createChatCompletion({
         //     model: 'text-davinci-003',
