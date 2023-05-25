@@ -26,6 +26,7 @@ exports.chat = async (req, res) => {
             },
             { responseType: 'stream' },
         );
+        console.log(completion);
         completion.data.on('data', (data) => {
             res.write(data.toString());
         });
