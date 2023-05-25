@@ -27,23 +27,18 @@ exports.chat = async (req, res) => {
             { responseType: 'stream' },
         );
         completion.data.on('data', (data) => {
-            console.log(data.toString());
-            res.write(data.toString());
+            const text = data.toString();
+            if (text === 'data: [DONE]') {
+                res.end();
+            } else {
+                res.write(text);
+            }
         });
     } catch (error) {
         if (error.response?.status) {
-            console.error(error.response.status, error.message);
-            error.response.data.on('data', (data) => {
-                const message = data.toString();
-                try {
-                    const parsed = JSON.parse(message);
-                    console.error('An error occurred during OpenAI request: ', parsed);
-                } catch (error) {
-                    console.error('An error occurred during OpenAI request: ', message);
-                }
-            });
+            res.error(error.response.status, error.message);
         } else {
-            console.error('An error occurred during OpenAI request', error);
+            res.error('500', 'An error occurred during OpenAI request');
         }
     }
 };
