@@ -4,7 +4,6 @@ const { UserModel } = require('../model');
 function auth(isAdmin = true) {
     return function (req, res, next) {
         const { authorization } = req.headers;
-        console.log(authorization);
         if (!authorization) {
             return res.error('401', 'Unauthorized');
         }
@@ -12,12 +11,9 @@ function auth(isAdmin = true) {
         if (!token) {
             return res.error('401', 'Unauthorized');
         }
-        console.log(token);
-        console.log(process.env.JWT_SECRET);
         try {
             jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
                 if (err) {
-                    console.log('err');
                     return res.error('401', 'Unauthorized');
                 }
                 const user = await UserModel.findOne({
