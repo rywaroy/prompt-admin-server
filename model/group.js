@@ -19,6 +19,16 @@ const GroupModel = sequelize.define('group', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
 }, {
     timestamps: true,
     underscored: true,

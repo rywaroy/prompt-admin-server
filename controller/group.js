@@ -1,4 +1,4 @@
-const GroupModel = require('../model/group');
+const { GroupModel } = require('../model');
 
 exports.createGroup = async (req, res) => {
     const { parentId, name, orderIndex } = req.body;
@@ -32,6 +32,25 @@ exports.deleteGroup = async (req, res) => {
     if (!group) {
         res.error('404', 'group not found');
         return;
+    }
+    const children = await GroupModel.findAll({
+        where: {
+            parentId: id,
+        },
+    });
+    if (children.length > 0) {
+        res.error('400', 'group has children');
+        return;
+    }
+    const prompts = await group.getPrompts();
+    for (let i = 0; i < prompts.length; i++) {
+        const prompt = prompts[i];
+        const fragments = await prompt.getFragments();
+        for (let j = 0; j < fragments.length; j++) {
+            const fragment = fragments[j];
+            await fragment.destroy();
+        }
+        await prompt.destroy();
     }
     await group.destroy();
     res.success();
