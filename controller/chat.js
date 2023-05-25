@@ -58,19 +58,20 @@ exports.chat = async (req, res) => {
         //     prompt: 'Hello world',
         // });
         completion.data.on('data', (data) => {
-            const lines = data.toString().split('\n').filter((line) => line.trim() !== '');
-            for (const line of lines) {
-                const message = line.replace(/^data: /, '');
-                if (message === '[DONE]') {
-                    return; // Stream finished
-                }
-                try {
-                    const parsed = JSON.parse(message);
-                    console.log(parsed.choices[0].text);
-                } catch (error) {
-                    console.error('Could not JSON parse stream message', message, error);
-                }
-            }
+            // const lines = data.toString().split('\n').filter((line) => line.trim() !== '');
+            // for (const line of lines) {
+            //     const message = line.replace(/^data: /, '');
+            //     if (message === '[DONE]') {
+            //         return; // Stream finished
+            //     }
+            //     try {
+            //         const parsed = JSON.parse(message);
+            //         console.log(parsed.choices[0].text);
+            //     } catch (error) {
+            //         console.error('Could not JSON parse stream message', message, error);
+            //     }
+            // }
+            console.log(data.toString());
         });
         res.success({});
         // const data = await fetch('https://api.openai.com/v1/chat/completions');
