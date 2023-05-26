@@ -12,7 +12,7 @@ exports.createPrompt = async (req, res) => {
 
 exports.updatePrompt = async (req, res) => {
     const { id } = req.params;
-    const { groupId, name, model, fragments } = req.body;
+    const { groupId, name, model, fragments = [] } = req.body;
     const prompt = await PromptModel.findByPk(id);
     if (!prompt) {
         res.error('404', 'prompt not found');
@@ -23,24 +23,28 @@ exports.updatePrompt = async (req, res) => {
         name,
         model,
     });
-    if (fragments) {
-        for (let i = 0; i < fragments.length; i++) {
-            const fragment = fragments[i];
-            if (fragment.id) {
-                const f = await PromptFragmentModel.findByPk(fragment.id);
-                await f.update({
-                    selected: fragment.selected,
-                    content: fragment.content,
-                    orderIndex: fragment.orderIndex,
-                });
-            } else {
-                await prompt.createFragment({
-                    selected: fragment.selected,
-                    content: fragment.content,
-                    orderIndex: fragment.orderIndex,
-                });
-            }
+    const oldFragments = await prompt.getFragments();
+    const deleteFragments = oldFragments.filter((oldFragment) => !fragments.find((fragment) => fragment.id === oldFragment.id));
+    for (let i = 0; i < fragments.length; i++) {
+        const fragment = fragments[i];
+        if (fragment.id) {
+            const f = await PromptFragmentModel.findByPk(fragment.id);
+            await f.update({
+                selected: fragment.selected,
+                content: fragment.content,
+                orderIndex: fragment.orderIndex,
+            });
+        } else {
+            await prompt.createFragment({
+                selected: fragment.selected,
+                content: fragment.content,
+                orderIndex: fragment.orderIndex,
+            });
         }
+    }
+    for (let i = 0; i < deleteFragments.length; i++) {
+        const fragment = deleteFragments[i];
+        await fragment.destroy();
     }
     res.success(prompt);
 };
@@ -75,5 +79,6 @@ exports.getPromptById = async (req, res) => {
             as: 'fragments',
         }],
     });
+    data.fragments.sort((a, b) => a.orderIndex - b.orderIndex);
     res.success(data);
 };

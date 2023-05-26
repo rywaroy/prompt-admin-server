@@ -42,5 +42,10 @@ exports.login = async (req, res) => {
     }
     res.success({
         token: generateToken(user.uuid),
+        ...user,
     });
+};
+
+exports.getUserInfo = async (req, res) => {
+    res.success(req.user);
 };
