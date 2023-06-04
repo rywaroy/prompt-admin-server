@@ -10,7 +10,9 @@ const app = express();
 // 中间件
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: '*',
+}));
 app.use(resultMiddleware);
 
 // 路由

@@ -18,5 +18,6 @@ module.exports = {
         'no-await-in-loop': 0,
         'max-len': 0,
         'object-curly-newline': 0,
+        'linebreak-style': 0,
     },
 };
