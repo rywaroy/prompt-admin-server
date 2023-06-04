@@ -9,11 +9,11 @@ exports.chat = async (req, res) => {
     try {
         console.log(1);
         res.writeHead(200, {
-            // 'Content-Type': 'text/event-stream',
-            // 'Cache-Control': 'no-cache',
-            // Connection: 'keep-alive',
-            'Content-Type': 'text/plain',
-            'Transfer-Encoding': 'chunked',
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            Connection: 'keep-alive',
+            // 'Content-Type': 'text/plain',
+            // 'Transfer-Encoding': 'chunked',
         });
         console.log(2);
         // const { model = 'gpt-3.5-turbo', messages } = req.body;
