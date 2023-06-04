@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
     origin: '*',
     // 支持 Content-Type text/event-stream
-    exposedHeaders: ['Content-Type', 'Content-Length'],
+    // exposedHeaders: ['Content-Type', 'Content-Length'],
 }));
 app.use(resultMiddleware);
 
