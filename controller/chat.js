@@ -11,8 +11,6 @@ exports.chat = async (req, res) => {
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             Connection: 'keep-alive',
-            // 'Content-Type': 'text/plain',
-            // 'Transfer-Encoding': 'chunked',
         });
         const { model = 'gpt-3.5-turbo', messages } = req.body;
         const completion = await openai.createChatCompletion(
