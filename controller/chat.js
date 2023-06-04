@@ -7,11 +7,11 @@ const openai = new OpenAIApi(configuration);
 
 exports.chat = async (req, res) => {
     try {
-        res.writeHead(200, {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            Connection: 'keep-alive',
-        });
+        // res.writeHead(200, {
+        //     'Content-Type': 'text/event-stream',
+        //     'Cache-Control': 'no-cache',
+        //     Connection: 'keep-alive',
+        // });
         const { model = 'gpt-3.5-turbo', messages } = req.body;
         const completion = await openai.createChatCompletion(
             {
