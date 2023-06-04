@@ -7,6 +7,9 @@ const openai = new OpenAIApi(configuration);
 
 exports.chat = async (req, res) => {
     try {
+        if (res.headersSent) {
+            return;
+        }
         res.writeHead(200, {
             // 'Content-Type': 'text/event-stream',
             // 'Cache-Control': 'no-cache',
