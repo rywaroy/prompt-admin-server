@@ -42,7 +42,8 @@ exports.login = async (req, res) => {
     }
     res.success({
         token: generateToken(user.uuid),
-        ...user,
+        account: user.account,
+        admin: user.admin,
     });
 };
 
