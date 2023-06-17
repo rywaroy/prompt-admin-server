@@ -12,11 +12,11 @@ exports.chat = async (req, res) => {
             'Cache-Control': 'no-cache',
             Connection: 'keep-alive',
         });
-        const { model = 'gpt-3.5-turbo', messages } = req.body;
+        const { model = 'gpt-3.5-turbo-0613', messages, temperature = 0.7 } = req.body;
         const completion = await openai.createChatCompletion(
             {
                 model,
-                temperature: 0,
+                temperature,
                 max_tokens: 1536,
                 top_p: 1,
                 presence_penalty: 0,
